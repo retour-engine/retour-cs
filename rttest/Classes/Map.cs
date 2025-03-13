@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace retour.Classes
+﻿namespace retour.Classes
 {
     public class Map
     {
