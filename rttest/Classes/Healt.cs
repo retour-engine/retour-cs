@@ -1,29 +1,34 @@
-﻿namespace retour.Classes
+﻿using retour.Methods;
+
+namespace retour.Classes
 {
     public class Healt
     {
-        public int type;
-        public int value;
-        public float resists;
-        public Healt(int type, int value, float resists)
-        {
-            if (type != 1) throw new ArgumentException("Type healt only 1 or 2");
-            else if (type != 2) throw new ArgumentException("Type healt only 1 or 2");
-            else if (value < 0) throw new ArgumentException($"You healt {value}, value cant < 0");
-            else if (resists < 0) throw new ArgumentException($"Resists cant < 0");
+        public Logging log = new();
 
-            this.type = type;
-            this.value = value;
-            this.resists = resists;
+        public int uid;
+        public int type { get; set; } // 1 - player, 2 - object
+        public int hp { get; set; }
+        public double resists { get; set; }
+        public Healt()
+        {
+            if ((type != 1) || (type != 2))
+            {
+                log.Log("ERROR", $"ObjectOnEngine[{uid}]", $"have invalid {type} type to heal"); throw new Exception($"ObjectOnEngine[{uid}]: have invalid {type} type to heal");
+            }
         }
+        public void damage(int damage, int uid, string reason = "null", int damagerId = -1, bool ignoreResists = false) 
+        {
+            if (ignoreResists) { hp = hp - damage; }
+            else if ( !ignoreResists) { hp = (int)(hp - (damage / resists)); }
 
-        public void damage(int damage) 
-        {
-            value = (int)(value-(damage/resists));
+            log.Log("LOG", $"Healt.Target[{uid}]", $"Damage [{damage}] from [{damagerId}]");
+
         }
-        public void heal(int heal)
+        public void heal(int heal, int uid, string reason = "null")
         {
-            value =+ heal;
+            hp =+ heal;
+            log.Log("LOG", $"Healt.Target[{uid}]", $"Heal [{heal}] from reason [{reason}]");
         }
     }
 }

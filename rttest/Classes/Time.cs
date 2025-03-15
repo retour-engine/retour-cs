@@ -7,14 +7,17 @@
         {
             if (tick == -1)
             {
+                Console.WriteLine("Engine has been debug mode");
+                return;
+            }
+            else
+            {
                 foreach (var _object in map.Objects)
                 {
                     Console.WriteLine($"{_object.Value.id}: {_object.Value.name}");
                 }
-                Console.WriteLine("Engine has been debug mode: %s", tick);
-                return;
+                tick++;
             }
-            else tick++;
         }
     }
 }

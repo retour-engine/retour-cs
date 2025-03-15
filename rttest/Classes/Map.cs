@@ -1,12 +1,18 @@
-﻿namespace retour.Classes
+﻿using retour.Methods;
+
+namespace retour.Classes
 {
     public class Map
     {
+        public Logging log;
+
         public int sizeMap = 4;
 
         public Dictionary<int, DataBlock> mapDate = new Dictionary<int, DataBlock>();
         public Dictionary<int, Player> players = new Dictionary<int, Player>();
         public Dictionary<int, Object> Objects = new Dictionary<int, Object>();
+
+        public Map(Logging log) { this.log = log; }
 
         public void createMap()
         {
@@ -20,7 +26,7 @@
                         newBlock.x = x;
                         newBlock.y = y;
                         newBlock.z = 0;
-                        newBlock.texture = "Apple";
+                        newBlock.texture = "sand";
                     }
                     mapDate.Add(mapDate.Count+1, newBlock);
                 }
@@ -28,13 +34,15 @@
         }
         public void spawnPlayer( Player player )
         {
-            if (players.TryGetValue( player.id, out var map ) ) { throw new Exception("ID has been ocuped"); }
+            if (players.TryGetValue( player.id, out var map ) ) { log.Log("WARN", "map.SpawnPlayer", "ID has been ocuped"); }
             players.Add(player.id, player);
+            log.Log("LOG", "Map.SpawnPlayer", $"Player[{player.id}] has been spawned on [{player.x}, {player.y}]");
         }
         public void spawnObject ( Object obj )
         {
-            if (Objects.TryGetValue( obj.id, out var map ) ) { throw new Exception("ID has been ocuped"); }
+            if (Objects.TryGetValue( obj.id, out var map ) ) { log.Log("WARN", "map.SpawnObject", "ID has been ocuped"); }
             Objects.Add( obj.id, obj );
+            log.Log("LOG", "Map.SpawnObject", $"Object[{obj.id}] has been spawned on [{obj.x}, {obj.y}]");
         }
     }
 }

@@ -20,7 +20,6 @@
         public string dysplayName { get; set; } = "Apple";
         public Dictionary<string, string[]> dataItem { get; set; }
     }
-
     public class Player
     {
         public Inventory? Inventory = new Inventory();
