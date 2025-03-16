@@ -6,10 +6,7 @@
 
         public Logging()
         {
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(path)))
-            {
-                outputFile.WriteLine(""); // очистка логов
-            }
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(path))) outputFile.WriteLine(""); // очистка логов
         }
 
 

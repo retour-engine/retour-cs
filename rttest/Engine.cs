@@ -28,15 +28,13 @@ class Engine
     {
         Map.createMap();
         logging.Log("LOG", "Engine.GameLoader", "Map created!");
-        var inventory = new Inventory();
         var newPlayer = new Player();
         {
-            newPlayer.id = 0; newPlayer.name = "terra"; newPlayer.y = 0; newPlayer.x = 0; newPlayer.Inventory = inventory; newPlayer.healt = new Healt();
+            newPlayer.id = 0; newPlayer.name = "terra"; newPlayer.y = 0; newPlayer.x = 0; newPlayer.Inventory = new Inventory(); newPlayer.healt = new Healt();
             {
                 newPlayer.healt.uid = 0;
-                newPlayer.healt.hp = 100;
-                newPlayer.healt.type = 1;
-                newPlayer.healt.resists = 1.0;
+                newPlayer.healt.hp = 50;
+                newPlayer.healt.resists = 1.5;
             }
         }
         Map.spawnPlayer(newPlayer);
@@ -48,6 +46,13 @@ class Engine
             item.dysplayName = "test";
         }
         Map.players[0].Inventory.addItem(item);
+        new Effects(Map.players[0])
+        {
+            effectType = 2,
+            secondToEnd = 5,
+            effectValue = 10,
+            name = "testeffect"
+        }.Run();
     }
 }
 

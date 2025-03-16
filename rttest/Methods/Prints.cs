@@ -12,7 +12,7 @@ namespace retour.Methods
             }
             foreach (var player in map.players)
             {
-                Console.WriteLine(player.Value.Inventory.items.Count);
+                Console.WriteLine(player.Value.healt.hp);
             }
         }
     }

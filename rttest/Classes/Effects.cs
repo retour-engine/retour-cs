@@ -3,6 +3,7 @@
     public class Effects
     {
         private int effectTime = 0;
+        private Player player;
 
         public string name;
         public int secondToEnd;
@@ -11,29 +12,36 @@
 
         public Effects(Player player) 
         {
-            while (effectTime < secondToEnd) 
-            { 
-                if (effectType == 0)
+            this.player = player;
+        }
+        public void Run()
+        {
+            Thread effectTask = new Thread(() => {
+                while (effectTime < secondToEnd)
                 {
-                    return;
-                }
+                    if (effectType == 0)
+                    {
+                        return;
+                    }
 
-                if (effectType == 1)
-                {
-                    player.healt.heal((int)effectValue, player.id, $"Healing from {name} effect");
-                }
+                    if (effectType == 1)
+                    {
+                        player.healt.heal((int)effectValue, player.id, $"Healing from {name} effect");
+                    }
 
-                if (effectType == 2) 
-                {
-                    player.healt.damage((int)effectValue, player.id, $"Damage from {name} effect");
+                    if (effectType == 2)
+                    {
+                        player.healt.damage((int)effectValue, player.id, $"Damage from {name} effect");
+                    }
+                    if (effectType == 3)
+                    {
+                        //player.healt.resists += effectValue;
+                    }
+                    effectTime++;
+                    Thread.Sleep(500);
                 }
-                if (effectType == 3)
-                {
-                    player.healt.resists += effectValue;
-                }
-                effectTime++;
-                Thread.Sleep(500);
-            }
+            });
+            effectTask.Start();
         }
     }
 }
